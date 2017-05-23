@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import asyncio_redis
 from sanic_session import RedisSessionInterface
+from urllib.parse import urlparse
+
+import os
 
 class Redis:
     """
@@ -8,11 +11,21 @@ class Redis:
     pool across your application.
     """
     _pool = None
+
+    @classmethod
+    def from_url(cls, url, db=None, decode_components=False, **kwargs):
+        url = urlparse(url)
+
+        return cls(**kwargs)
+
     async def get_redis_pool(self):
+        url = urlparse(os.getenv('REDIS_URL', 'redis://127.0.0.1:6379'))
         if not self._pool:
             self._pool = await asyncio_redis.Pool.create(
-                host='localhost',
-                port=6379,
+                host=url.hostname,
+                port=url.port,
+                username=url.username,
+                password=url.password,
                 poolsize=10)
         return self._pool
 
