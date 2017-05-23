@@ -10,7 +10,7 @@ manager = Manager()
 @manager.command
 def runserver():
     return app.run(host='0.0.0.0',
-                   port=os.getenv('PORT', 8000),
+                   port=int(os.getenv('PORT', 8000)),
                    workers=4,
                    log_config=None)
 
