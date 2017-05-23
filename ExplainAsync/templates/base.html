@@ -46,7 +46,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand topnav" href="/index.html">
+    <a class="navbar-brand topnav" href="/">
     <i class="fa fa-connectdevelop" aria-hidden="true"></i>
         Home
     </a>
@@ -72,27 +72,6 @@
           <h1>ExplainToMe</h1>
           <h3>Automatic Web Article Summarizer</h3>
           <hr class="intro-divider">
-          <div id="loader" class="cssload-square" hidden="">
-              <div class="cssload-square-part cssload-square-green"></div>
-              <div class="cssload-square-part cssload-square-pink"></div>
-              <div class="cssload-square-blend"></div>
-          </div>
-          <form id="input-form" role="form" class="form-inline" action="/summary" method="POST">
-              <div class="form-group">
-                  <label for="url" class="sr-only">url</label>
-                  <input class="form-control" id="url" name="url" placeholder="Webpage URL" required="" type="url" value="">
-              </div>
-              <div class="form-group">
-                  <label for="max_sent" class="sr-only">max_sent</label>
-                  <input class="form-control" id="max_sent" name="max_sent" placeholder="Max Sentences" required="" step="1" type="number" value="10">
-              </div>
-              <div class="form-group">
-                  <button id="send" type="submit" class="btn btn-success">
-                      <span class="glyphicon glyphicon-send"></span>
-                      Send
-                  </button>
-              </div>
-          </form>
           {% block content %}
           {% endblock %}
         </div>

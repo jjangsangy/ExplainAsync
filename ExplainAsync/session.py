@@ -24,7 +24,6 @@ class Redis:
             self._pool = await asyncio_redis.Pool.create(
                 host=url.hostname,
                 port=url.port,
-                username=url.username,
                 password=url.password,
                 poolsize=10)
         return self._pool
