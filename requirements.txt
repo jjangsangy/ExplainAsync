@@ -1,0 +1,6 @@
+sanic
+manage.py
+sanic-jinja2
+sanic-session
+asyncio-redis
+python-dateutil
