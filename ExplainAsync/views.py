@@ -5,14 +5,17 @@ from os.path import join as joinpath
 from sanic import Blueprint
 from sanic.response import json
 from sanic_jinja2 import SanicJinja2
+from sanic_session import InMemorySessionInterface
 
 from . session import create_session
 
 site = Blueprint('site')
 jinja = SanicJinja2()
-session = create_session()
 
 site.static('', joinpath(dirname(__file__), 'static'))
+
+session = InMemorySessionInterface()
+
 
 @site.middleware('request')
 async def add_session_to_request(request):
