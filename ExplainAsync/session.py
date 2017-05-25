@@ -36,7 +36,7 @@ class Redis:
         return self._pool
 
 
-def get_session():
+def create_session():
     redis_url = os.getenv('REDIS_URL')
     if redis_url:
         redis = Redis.from_url(url)
