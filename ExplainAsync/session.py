@@ -13,14 +13,14 @@ class Redis:
     """
     _pool = None
 
-    async def __init__(self, host='127.0.0.1', port=6379, password=None, size=10):
+    def __init__(self, host='127.0.0.1', port=6379, password=None, size=10):
         self.host = host
         self.port = port
         self.password = password
         self.size = size
 
     @classmethod
-    async def from_url(cls, url):
+    def from_url(cls, url):
         url = urlparse(url)
         return cls(host=url.hostname, port=url.port, password=url.password)
 
