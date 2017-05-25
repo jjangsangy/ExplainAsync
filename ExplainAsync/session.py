@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import asyncio_redis
-from sanic_session import RedisSessionInterface
+
+from sanic_session import RedisSessionInterface, InMemorySessionInterface
 from urllib.parse import urlparse
 
 import os
@@ -34,6 +35,11 @@ class Redis:
 
         return self._pool
 
-def create_redis_session(url):
-    redis = Redis.from_url(url)
-    return RedisSessionInterface(redis.get_redis_pool)
+
+def get_session():
+    redis_url = os.getenv('REDIS_URL')
+    if redis_url:
+        redis = Redis.from_url(url)
+        return RedisSessionInterface(redis.get_redis_pool)
+    else:
+        return InMemorySessionInterface()

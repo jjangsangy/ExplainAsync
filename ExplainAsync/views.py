@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
+import os
+
 from os.path import dirname
 from os.path import join as joinpath
 
 from sanic import Blueprint
 from sanic.response import json
 from sanic.exceptions import NotFound
-from sanic_session import InMemorySessionInterface
 
-from . session import create_redis_session
+from . session import create_session
 from . templates import create_template_env
 
 site = Blueprint('site')
 
 site.static('', joinpath(dirname(__file__), 'static'))
+session = create_session()
 
 jinja = create_template_env()
-session = InMemorySessionInterface()
 
 @site.middleware('request')
 async def add_session_to_request(request):
