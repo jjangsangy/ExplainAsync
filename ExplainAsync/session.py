@@ -12,22 +12,28 @@ class Redis:
     """
     _pool = None
 
+    async def __init__(self, host='127.0.0.1', port=6379, password=None, size=10):
+        self.host = host
+        self.port = port
+        self.password = password
+        self.size = size
+
     @classmethod
-    def from_url(cls, url, db=None, decode_components=False, **kwargs):
+    async def from_url(cls, url):
         url = urlparse(url)
+        return cls(host=url.hostname, port=url.port, password=url.password)
 
-        return cls(**kwargs)
+    async def get_redis_pool(self) -> asyncio_redis.Pool:
 
-    async def get_redis_pool(self):
-        url = urlparse(os.getenv('REDIS_URL', 'redis://127.0.0.1:6379'))
         if not self._pool:
             self._pool = await asyncio_redis.Pool.create(
-                host=url.hostname,
-                port=url.port,
-                password=url.password,
-                poolsize=10)
+                host=self.host,
+                port=self.port,
+                password=self.password,
+                poolsize=self.size)
+
         return self._pool
 
-def create_session():
-    redis = Redis()
+def create_redis_session(url):
+    redis = Redis.from_url(url)
     return RedisSessionInterface(redis.get_redis_pool)
